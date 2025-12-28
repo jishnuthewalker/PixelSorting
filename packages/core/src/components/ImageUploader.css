@@ -1,0 +1,40 @@
+.image-uploader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    background-color: var(--glass-bg);
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 300px;
+}
+
+.image-uploader.dragging {
+    border-color: var(--accent-primary);
+    background-color: rgba(100, 108, 255, 0.1);
+}
+
+.upload-content {
+    text-align: center;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.upload-content svg {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: all;
+}

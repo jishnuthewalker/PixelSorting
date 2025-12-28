@@ -1,0 +1,6 @@
+{
+    "buildCommand": "npm run build -w @pixel-sorter/web",
+    "outputDirectory": "packages/web/dist",
+    "installCommand": "npm install",
+    "framework": "vite"
+}

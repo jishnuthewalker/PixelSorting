@@ -1,0 +1,12 @@
+{
+    "name": "pixel-sorter-monorepo",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "npm run build --workspaces",
+        "dev": "npm run dev -w @pixel-sorter/web",
+        "lint": "npm run lint --workspaces"
+    }
+}
