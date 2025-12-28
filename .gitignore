@@ -1,2 +1,8 @@
 node_modules
 .vercel
+dist
+.DS_Store
+*.log
+coverage
+.cache
+.vite
