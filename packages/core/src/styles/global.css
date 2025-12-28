@@ -51,7 +51,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden; /* App-like feel */
+  overflow: hidden;
+  /* App-like feel */
 }
 
 button {
@@ -61,7 +62,8 @@ button {
   font-family: inherit;
 }
 
-input, select {
+input,
+select {
   font-family: inherit;
 }
 
@@ -82,4 +84,24 @@ input, select {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #444;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+  }
+
+  button,
+  input,
+  select {
+    min-height: 44px;
+    /* Minimum touch target size */
+  }
+
+  /* Hide scrollbars on mobile for cleaner look but allow scrolling */
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 }

@@ -6,6 +6,31 @@
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+    .app-layout {
+        display: flex;
+        flex-direction: column-reverse;
+        /* Controls at bottom, Image at top */
+        height: 100vh;
+        height: 100dvh;
+        /* Dynamic view height for mobile browsers */
+    }
+
+    .sidebar {
+        height: 40%;
+        /* Controls take up bottom 40% */
+        border-right: none;
+        border-top: 1px solid var(--border-color);
+        z-index: 10;
+    }
+
+    .main-content {
+        height: 60%;
+        /* Image takes up top 60% */
+        flex: 1;
+    }
+}
+
 .sidebar {
     background-color: var(--bg-secondary);
     border-right: 1px solid var(--border-color);
@@ -23,6 +48,7 @@
     font-size: var(--font-size-lg);
     font-weight: 600;
     background: linear-gradient(to right, #fff, #aaa);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
