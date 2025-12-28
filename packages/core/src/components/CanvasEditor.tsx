@@ -20,7 +20,6 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [originalImage, setOriginalImage] = useState<HTMLImageElement | null>(null);
     const [maskImage, setMaskImage] = useState<HTMLImageElement | null>(null);
-    const [displaySize, setDisplaySize] = useState({ width: 0, height: 0 });
 
     // Load image when file changes
     useEffect(() => {
@@ -29,25 +28,6 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
         const img = new Image();
         img.onload = () => {
             setOriginalImage(img);
-
-            // Calculate display size
-            const aspectRatio = img.naturalWidth / img.naturalHeight;
-            const maxWidth = window.innerWidth - 360; // Sidebar width + padding
-            const maxHeight = window.innerHeight - 40;
-
-            let w = img.naturalWidth;
-            let h = img.naturalHeight;
-
-            if (w > maxWidth) {
-                w = maxWidth;
-                h = w / aspectRatio;
-            }
-            if (h > maxHeight) {
-                h = maxHeight;
-                w = h * aspectRatio;
-            }
-
-            setDisplaySize({ width: w, height: h });
         };
         img.src = URL.createObjectURL(imageFile);
     }, [imageFile]);
@@ -55,7 +35,6 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
     // Load mask when file changes
     useEffect(() => {
         if (!maskFile) {
-            // Use a cleanup-like pattern: schedule the state update
             const clearMask = () => setMaskImage(null);
             clearMask();
             return;
@@ -73,14 +52,13 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
         };
     }, [maskFile]);
 
-    // Apply sorting when options change
+    // Apply sorting when options change (and initial draw)
     useEffect(() => {
         if (!originalImage || !canvasRef.current) return;
 
         const applySort = async () => {
             onProcessingChange(true);
 
-            // Use setTimeout to allow UI to update before heavy processing
             setTimeout(() => {
                 const canvas = canvasRef.current!;
                 const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
@@ -88,6 +66,7 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
                 const width = originalImage.naturalWidth;
                 const height = originalImage.naturalHeight;
 
+                // Set actual canvas resolution (internal pixels)
                 canvas.width = width;
                 canvas.height = height;
 
@@ -126,8 +105,6 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
                     maskCtx.save();
                     maskCtx.translate(tempWidth / 2, tempHeight / 2);
                     maskCtx.rotate(angleRad);
-                    // Draw mask stretched to fit image? Or centered?
-                    // Assuming mask should match image dimensions.
                     maskCtx.drawImage(maskImage, -width / 2, -height / 2, width, height);
                     maskCtx.restore();
 
@@ -158,7 +135,7 @@ export const CanvasEditor: React.FC<CanvasEditorProps> = ({
     if (!imageFile) return null;
 
     return (
-        <div className="canvas-container" style={{ width: displaySize.width, height: displaySize.height }}>
+        <div className="canvas-container">
             <canvas
                 ref={canvasRef}
                 className="editor-canvas"
