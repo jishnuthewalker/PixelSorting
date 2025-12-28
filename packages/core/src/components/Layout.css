@@ -1,55 +1,45 @@
 .app-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr;
+    display: block;
+    /* No more grid, we use absolute positioning */
+    position: relative;
     height: 100vh;
     width: 100vw;
+    background-color: var(--bg-primary);
     overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-    .app-layout {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        height: 100dvh;
-    }
-
-    .sidebar {
-        height: 40%;
-        width: 100%;
-        border-right: none;
-        border-top: 1px solid var(--border-color);
-        z-index: 10;
-        /* Controls at BOTTOM */
-        order: 1;
-    }
-
-    .main-content {
-        height: 60%;
-        width: 100%;
-        flex: 1;
-        /* Image at TOP */
-        order: 0;
-    }
-}
-
+/* Floating Sidebar on Desktop */
 .sidebar {
-    background-color: var(--bg-secondary);
-    border-right: 1px solid var(--border-color);
+    position: absolute;
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+    bottom: var(--spacing-lg);
+    width: 320px;
+
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+
     display: flex;
     flex-direction: column;
-    height: 100%;
+    z-index: 100;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .sidebar-header h1 {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    background: linear-gradient(to right, #fff, #aaa);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: var(--text-primary);
+    /* Cleaner white title */
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -58,7 +48,70 @@
 .sidebar-content {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
+    /* Custom scrollbar for sidebar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-tertiary) transparent;
+}
+
+.main-content {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    /* Grid background effect */
+    background-image:
+        radial-gradient(circle at 1px 1px, var(--bg-tertiary) 1px, transparent 0);
+    background-size: 40px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .app-layout {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .main-content {
+        /* Image Top */
+        flex: 1;
+        width: 100%;
+        order: 0;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .sidebar {
+        /* Controls Bottom */
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        width: 100%;
+        height: 45%;
+        /* Slightly larger for easier touch */
+
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        border: none;
+        border-top: 1px solid var(--glass-border);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+
+        order: 1;
+        inset: auto;
+        /* Reset absolute positioning properties */
+    }
+
+    .sidebar-header {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .sidebar-content {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
 }
 
 .main-content {
