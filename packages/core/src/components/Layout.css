@@ -9,25 +9,26 @@
 @media (max-width: 768px) {
     .app-layout {
         display: flex;
-        flex-direction: column-reverse;
-        /* Controls at bottom, Image at top */
+        flex-direction: column;
+        /* Controls at top, Image at bottom */
         height: 100vh;
         height: 100dvh;
-        /* Dynamic view height for mobile browsers */
     }
 
     .sidebar {
         height: 40%;
-        /* Controls take up bottom 40% */
         border-right: none;
-        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        border-top: none;
         z-index: 10;
+        /* Ensure sidebar comes first in column layout */
+        order: 0;
     }
 
     .main-content {
         height: 60%;
-        /* Image takes up top 60% */
         flex: 1;
+        order: 1;
     }
 }
 
