@@ -8,5 +8,11 @@
         "build": "npm run build --workspaces",
         "dev": "npm run dev -w @pixel-sorter/web",
         "lint": "npm run lint --workspaces"
+    },
+    "overrides": {
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "@types/react": "18.3.12",
+        "@types/react-dom": "18.3.0"
     }
 }
